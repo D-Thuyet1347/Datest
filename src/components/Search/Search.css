@@ -1,0 +1,32 @@
+.search{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+.search-component {
+    position: absolute;
+    margin: auto;
+    background-color: rgba(6, 6, 6, 0.091);
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px; 
+    z-index: 10;
+    display: flex;
+    gap: 5px;
+    right: 0;    
+    top: -20px;
+    width: 900px;
+}
+
+.search-component input {
+    padding: 5px;
+    margin-right: 5px;
+    width: 100%;
+}
+
+.search-component button {
+    padding: 5px 10px;
+    top: 10px;
+}
