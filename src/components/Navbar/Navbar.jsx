@@ -39,10 +39,11 @@ export const Navbar = () => {
 
   // Xử lý đăng nhập
   const handleLogin = () => {
-    const userAvatar = {user}
+    const userAvatar = {avatar}
     setUserAvatar(userAvatar);
     navigate('/sign-in');
     localStorage.setItem('user', userAvatar);
+    setIsMenu(false);
   };
 
   // Xử lý đăng xuất
@@ -103,11 +104,13 @@ export const Navbar = () => {
               <ul>
                 {userAvatar ? (
                   <>
+                    <li>Thông tin cá nhân</li>
+                    <hr />
                     <li onClick={handleLogout}>Đăng xuất</li>
                   </>
                 ) : (
                   <>
-                    <li onClick={handleLogin}>Đăng nhập</li>
+                 
                   </>
                 )}
               </ul>
