@@ -8,7 +8,7 @@ export const Catalog = () => {
         Hot Products
      </h1>
      <div className="catalog">
-      <div class="product-card">
+      <div class="product-card-1">
         <img alt="Skincare" class="product-image" />
         <div class="product-info">
           <h3>Discover Skincare</h3>

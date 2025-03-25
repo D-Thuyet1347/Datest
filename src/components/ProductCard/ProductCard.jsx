@@ -32,14 +32,12 @@ const ProductCard = () => {
             </div>
           </div>
           <Link to={`/product-details/${product.id}`}>
+            <div className="product-info-card">
             <img
-              width={250}
-              height={200}
               className="product-image"
               src={product.image}
               alt={product.title}
             />
-            <div className="product-info-card">
               <h3 className="product-name">{product.name}</h3>
               <span className="product-price">{product.price}</span>
             </div>

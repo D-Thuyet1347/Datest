@@ -2,27 +2,25 @@ import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import { FaAngleRight } from "react-icons/fa6";
 import { IoMdSearch } from "react-icons/io";
-import { IoBagHandleOutline, IoPersonOutline } from "react-icons/io5";
+import { IoBagHandleOutline } from "react-icons/io5";
 import { Search } from '../Search/Search';
 import { useNavigate } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
-import { CiCalendarDate } from 'react-icons/ci';
+import avatar from '../../assest/img/avatar.png';
+import user from '../../assest/img/user.png';
 
 export const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-    const navigate = useNavigate();
-    const cart = () => {
-        navigate('/cart');
-    }
-    const sign = () => {
-        navigate('/sign');
-        setIsMenu(!isMenu);
-    }
-    const service = () => {
-        navigate('/service-spa');
-    }
+  const [userAvatar, setUserAvatar] = useState(localStorage.getItem('user') || '');  // Lưu email đăng nhập
+  
+  const navigate = useNavigate();
+
+  const cart = () => navigate('/cart');
+
+  const service = () => navigate('/service-spa');
+
   const toggleSearch = () => {
     setShowSearch(!showSearch);
   };
@@ -30,17 +28,28 @@ export const Navbar = () => {
   // Lắng nghe sự kiện scroll để đổi màu Navbar
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
-    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  
+
+  // Xử lý đăng nhập
+  const handleLogin = () => {
+    const userAvatar = {user}
+    setUserAvatar(userAvatar);
+    navigate('/sign-in');
+    localStorage.setItem('user', userAvatar);
+  };
+
+  // Xử lý đăng xuất
+  const handleLogout = () => {
+    setUserAvatar('');
+    localStorage.removeItem('user');
+  };
 
   return (
     <div className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -83,17 +92,28 @@ export const Navbar = () => {
         <div onClick={cart} className="navbar-cart">
           <IoBagHandleOutline />
         </div>
-          <div onClick={sign} className="navbar-account">
-            <IoPersonOutline  />
-            {isMenu && <div className="menu">
+        <div  className="navbar-account" >
+          {userAvatar ? (
+            <img onClick={() => setIsMenu(!isMenu)} src={avatar} width={28} alt="Avatar" /> 
+          ) : (
+            <img onClick={handleLogin} src={user} width={28} alt="Avatar" />
+          )}
+          {isMenu && (
+            <div className="menu">
               <ul>
-                <li>Đăng nhập</li>
-                <li>Đăng ký</li>
+                {userAvatar ? (
+                  <>
+                    <li onClick={handleLogout}>Đăng xuất</li>
+                  </>
+                ) : (
+                  <>
+                    <li onClick={handleLogin}>Đăng nhập</li>
+                  </>
+                )}
               </ul>
             </div>
-
-            }
-          </div>
+          )}
+        </div>
       </div>
     </div>
   );
