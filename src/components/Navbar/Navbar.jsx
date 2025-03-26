@@ -34,11 +34,8 @@ export const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  
-
   // Xử lý đăng nhập
-  const handleLogin = () => {
+  const handleAvatar = () => {
     const userAvatar = {avatar}
     setUserAvatar(userAvatar);
     navigate('/sign-in');
@@ -97,7 +94,7 @@ export const Navbar = () => {
           {userAvatar ? (
             <img onClick={() => setIsMenu(!isMenu)} src={avatar} width={28} alt="Avatar" /> 
           ) : (
-            <img onClick={handleLogin} src={user} width={28} alt="Avatar" />
+            <img onClick={handleAvatar} src={user} width={28} alt="Avatar" />
           )}
           {isMenu && (
             <div className="menu">

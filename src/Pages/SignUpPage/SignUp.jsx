@@ -2,7 +2,7 @@ import React, {  useState } from 'react';
 import './SignUp.css';
 import { registerUser } from '../../APIs/userApi';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import  { notifyError, notifySuccess, ToastContainer } from '../../utils/toast';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -17,21 +17,22 @@ const SignUp = () => {
     console.log("Gửi request đăng ký:", { email, password, confirmPassword });
 
     if (password !== confirmPassword) {
-      message.error("Mật khẩu xác nhận không khớp!");
+      notifyError("Mật khẩu xác nhận không khớp!");
       return;
     }
 
     try {
       const data = await registerUser({ email, password ,confirmPassword});
-      message.success(data.message || "Đăng ký thành công!");
+      notifySuccess(data.message || "Đăng ký thành công!");
       navigate("/sign-in");
     } catch (error) {
-      message.error(error.message || "Đăng ký thất bại!");
+      notifyError("Đăng ký thất bại!");
     }
   };
 
   return (
     <div className="signup-container">
+    <ToastContainer />
       <div className="signup-box">
         <h2>Sign Up</h2>
         <form onSubmit={handleSignUp}>

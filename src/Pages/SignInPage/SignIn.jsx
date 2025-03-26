@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './SignIn.css';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import { loginUser } from '../../APIs/userApi';
+import { notifyError, notifySuccess, ToastContainer } from '../../utils/toast';
 
 
 const SignIn = () => {
@@ -11,17 +11,17 @@ const SignIn = () => {
     const navigate = useNavigate();
     const handleSignIn = async (e) => {
         e.preventDefault();
-        console.log("Gửi request đăng nhập:", { email, password });
       try{
         const data = await loginUser({ email, password });
         if(data.isEmail){
-          console.log(data.message || "Đăng nhập thành công!");
+          notifySuccess(data.message || "Đăng nhập thành công!");
+          
           navigate("/");
         }else{
-          console.log("Tài khoản hoặc mật khẩu không đúng!");
+          notifyError("Tài khoản hoặc mật khẩu không đúng!");
         }
       }catch(error){
-        console.log(error.message || "Đăng nhập thất bại!");
+        notifyError(error.message || "Đăng nhập thất bại!");
       }
     }
     const handleSignUp = () => navigate('/sign-up');
@@ -37,6 +37,7 @@ const SignIn = () => {
  
     return (
       <div className="signin-container">
+    <ToastContainer />
       <div className="signin-box">
         <h2>Sign In</h2>
         <form>
